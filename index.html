@@ -19,8 +19,6 @@
     </style>
 </head>
 <body>
-
-   
         <h2>Multi-Function Calculator</h2>
         <p>Enter numbers separated by commas:</p>
         <input type="text" id="numbers" placeholder="e.g) 0,10,20,30,40">
@@ -30,13 +28,18 @@
         <button onclick="x()">Arccos(x)</button>
         <button onclick="x()">ab<sup>x</sup></button>
         <button onclick="calculateLogarithm()">log<sub>b</sub>x</button>
-        <button onclick="x()">Mean Absolute Deviation</button>
+        <button onclick="calculateMAD()">Mean Absolute Deviation</button>
         <button onclick="calculateStandardDeviation()">Standard Deviation</button>
         <button onclick="x()">x<sup>y</sup></button>
         <button onclick="x()">sinh(x)</button>
 
     <h3>Results:</h3>
     <p id="result"> </p>
+
+        <button onclick="showDetails()">Show Steps</button>
+        <button onclick="hideDetails()">Hide Steps</button>
+    <h3>Steps:</h3>
+    <p id="steps" style="visibility: hidden"> </p>
 
     <script src="Script1.js"></script>
    
