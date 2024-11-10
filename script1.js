@@ -1,7 +1,7 @@
 // Function to get input numbers as an array
-function getNumbers() {
+function getNumbers(split) {
     const input = document.getElementById("numbers").value;
-    return input.split(",").map(Number).filter(num => !isNaN(num));
+    return input.split(`${split}`).map(Number).filter(num => !isNaN(num)); // returns an array of Numbers (filters out non nurmerical values)
 }
 
 
@@ -11,8 +11,8 @@ function getNumbers() {
 //------------------------------------------------------------------------------------------------------------------------
 
 function calculateLogarithm() {
-    const numbers = getNumbers();
-
+    const numbers = getNumbers(",");
+  
     if (numbers.length !== 2) {
         showError("Please enter two numbers separated by a comma for base and value.");
         return;
@@ -70,14 +70,45 @@ function Power(base, exponent) {
 
     return result;
 }
+//------------------------------------------------------------------------------------------------------------------------
+//                                           Function to calculate Mean Absolute Deviation
+//------------------------------------------------------------------------------------------------------------------------
 
+function calculateMAD(){
+    let numbers = getNumbers(",");
+    if(numbers.length ===0 || numbers.length <0){
+        numbers = getNumbers(" ");
+    }
+    const len = numbers.length;
+    if(len === 0) return showError("Please enter a valid input.");
+    let sum = 0;
+    for (let i =0; i< len; i++){
+        sum += numbers[i];
+    }
+    const mean = sum/numbers.length;
+
+    let abs_diff= 0;
+    for (let i = 0; i< len; i++){
+        let dif = numbers[i] - mean;
+        if (dif<0){
+            dif*=-1
+        }
+        abs_diff += dif
+    }
+
+    const mad = abs_diff/len
+    displayResult(`Mean Absolute Difference : ${mad.toFixed(2)}`)
+    displaySteps(`a, b, cx`)
+
+    }
+    
 
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to calculate Standard Deviation
 //------------------------------------------------------------------------------------------------------------------------
 
 function calculateStandardDeviation() {
-    const numbers = getNumbers();
+    const numbers = getNumbers(",");
     if (numbers.length === 0) return showError("Please enter valid numbers.");
     const mean = numbers.reduce((acc, num) => acc + num, 0) / numbers.length;
     const variance = numbers.reduce((acc, num) => acc + Math.pow(num - mean, 2), 0) / numbers.length;
@@ -94,3 +125,17 @@ function displayResult(message) {
 function showError(message) {
     alert(message);
 }
+
+function displaySteps(message){
+    document.getElementById("steps").textContent = message;
+}
+
+function showSteps(){
+    document.getElementById("steps").style.visibility = "visibile";
+}
+
+function hideSteps(){
+    document.getElementById("steps").style.visibility = "hidden";
+}
+
+
