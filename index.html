@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eternity Calculator</title>
+    <link rel="stylesheet" href="design.css">
+    <style>
+        body {
+          font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+   
+        <h2>Multi-Function Calculator</h2>
+        <p>Enter numbers separated by commas:</p>
+        <input type="text" id="numbers" placeholder="e.g) 0,10,20,30,40">
+
+    <!-- Buttons for each function -->
+  
+        <button onclick="x()">Arccos(x)</button>
+        <button onclick="x()">ab<sup>x</sup></button>
+        <button onclick="calculateLogarithm()">log<sub>b</sub>x</button>
+        <button onclick="x()">Mean Absolute Deviation</button>
+        <button onclick="calculateStandardDeviation()">Standard Deviation</button>
+        <button onclick="x()">x<sup>y</sup></button>
+        <button onclick="x()">sinh(x)</button>
+
+    <h3>Results:</h3>
+    <p id="result"> </p>
+
+    <script src="Script1.js"></script>
+   
+</body>
+</html>
