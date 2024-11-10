@@ -51,22 +51,25 @@ function approximateLog(x) {
 }
 
 // This method manually calculates base^exponent for integer exponents
-function Power(base, exponent) {
+function manualPower(base, exponent) {
     let result = 1;
     let currentBase = base;
-    let currentExponent = Math.abs(exponent);
+    let currentExponent = exponent;
 
-    while (currentExponent > 0) {
-        if (currentExponent % 2 === 1) {
+    if (currentExponent < 0) {
+        currentExponent = -currentExponent;
+        for (let i = 0; i < currentExponent; i++) {
             result *= currentBase;
         }
-        currentBase *= currentBase;
-        currentExponent = Math.floor(currentExponent / 2);
+        result = 1 / result;
+    } else {
+        for (let i = 0; i < currentExponent; i++) {
+            result *= currentBase;
+        }
     }
 
-    return exponent < 0 ? 1 / result : result;
+    return result;
 }
-
 
 
 //------------------------------------------------------------------------------------------------------------------------
