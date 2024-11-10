@@ -50,8 +50,8 @@ function approximateLog(x) {
     return result;
 }
 
-// This method manually calculates base^exponent for integer exponents
-function manualPower(base, exponent) {
+// This method manually calculates exponential numbers
+function Power(base, exponent) {
     let result = 1;
     let currentBase = base;
     let currentExponent = exponent;
