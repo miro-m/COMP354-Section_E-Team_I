@@ -241,6 +241,58 @@ const stdDev = sqrt_custom(variance);
     
 }
 
+//------------------------------------------------------------------------------------------------------------------------
+//                                           Function to calculate Arccos
+//------------------------------------------------------------------------------------------------------------------------
+
+function calculateArccos() {
+  let numbers = getNumbers(",");
+  if (numbers.length === 0) {
+    numbers = getNumbers(" ");
+  }
+
+  if (numbers.length !== 3) {
+    showError("Please enter three numbers separated by a comma for opposite and " +
+        "adjacent side values.",);
+    return;
+  }
+    
+//calculate cosine value using law of cosines
+  const a = numbers[0];
+  const b = numbers[1];
+  const c = numbers[2];
+
+  cosVal = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c);
+    
+//approximate arccos using Taylor expansion
+  const val = cosVal;
+
+  if (val < -1 || val > 1) {
+    showError("Invalid triangle. Please check your side lengths and re-enter.");
+    return;
+  } else if (val == 1) {
+    const arccosResult = 0;
+    displayResult(`Arccos:${arccosResult.toFixed(2)}`);
+  } else if (val == -1) {
+    const arccosResult = 3.14;
+    displayResult(`Arccos:${arccosResult.toFixed(2)}`);
+  } else {
+    const arccosResult =
+      3.1415926535 / 2 -
+      val -
+      val ** 3 / 6 -
+      (3 * val ** 5) / 40 -
+      (5 * val ** 7) / 112 -
+      (35 * val ** 9) / 1152 -
+      (63 * val ** 11) / 2816 -
+      (231 * val ** 13) / 13312 -
+      (143 * val ** 15) / 10240 -
+      (6435 * val ** 17) / 557056;
+    displayResult(`Arccos:${arccosResult.toFixed(2)}`);
+  }
+}
+
+
 
 
 //Utility Function
