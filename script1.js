@@ -1,10 +1,21 @@
-// Function to get input numbers as an array
-function getNumbers(split) {
-    const input = document.getElementById("numbers").value;
-    return input.split(`${split}`).map(Number).filter(num => !isNaN(num)); // returns an array of Numbers (filters out non nurmerical values)
+function toggleSteps() {
+    const stepsDiv = document.getElementById("steps");
+    const button = document.getElementById("toggleStepsButton");
+
+    if (stepsDiv.style.display === "none") {
+        stepsDiv.style.display = "block";
+        button.textContent = "Hide Steps";
+    } else {
+        stepsDiv.style.display = "none";
+        button.textContent = "Show Steps";
+    }
 }
 
-
+// Function to get input numbers as an array
+function getNumbers() {
+    const input = document.getElementById("numbers").value;
+    return input.split(",").map(Number).filter(num => !isNaN(num));
+}
 
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to calculate Logarithm
@@ -31,6 +42,14 @@ function calculateLogarithm() {
 
     const logResult = logValue / logBase;
     displayResult(`Logarithm: ${logResult.toFixed(2)}`);
+
+     const steps = `
+        <p>1. Entered base: ${base}, Entered exponent: ${value}</p>
+        <p>2. Calculated ln(${base}) ≈ ${logBase.toFixed(4)}</p>
+        <p>3. Calculated ln(${value}) ≈ ${logValue.toFixed(4)}</p>
+        <p>4. Computed log<sub>${base}</sub>(${value}) = ln(${value}) / ln(${base}) ≈ ${logResult.toFixed(2)}</p>
+    `;
+    document.getElementById("stepDetails").innerHTML = steps;    
 }
 
 // This method approximates the natural logarithm (ln) using a series expansion
@@ -98,11 +117,16 @@ function calculateMAD(){
 
     const mad = abs_diff/len
     displayResult(`Mean Absolute Difference : ${mad.toFixed(2)}`)
-    displaySteps(`a, b, cx`)
-
+   // displaySteps(`a, b, cx`)
+    const steps = `
+        <p>1. </p>
+        <p>2. </p>
+        <p>3. </p>
+        <p>4. </p>
+      
+    `;
+    document.getElementById("stepDetails").innerHTML = steps;
     }
-    
-
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to calculate Standard Deviation
 //------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +138,17 @@ function calculateStandardDeviation() {
     const variance = numbers.reduce((acc, num) => acc + Math.pow(num - mean, 2), 0) / numbers.length;
     const stdDev = Math.sqrt(variance);
     displayResult(`Standard Deviation: ${stdDev.toFixed(2)}`);
+
+    const steps = `
+        <p>1. </p>
+        <p>2. </p>
+        <p>3. </p>
+        <p>4. </p>
+      
+    `;
+    document.getElementById("stepDetails").innerHTML = steps;
+
+    
 }
 
 
