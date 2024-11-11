@@ -253,7 +253,7 @@ function calculateArccos() {
 
   if (numbers.length !== 3) {
     showError("Please enter three numbers separated by a comma for opposite and " +
-        "adjacent side values.",);
+        "adjacent side values.");
     return;
   }
     
