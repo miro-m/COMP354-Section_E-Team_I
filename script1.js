@@ -11,6 +11,12 @@ function toggleSteps() {
     }
 }
 
+function defaultSteps(){
+    const defaultSteps = "No steps to show yet. Perform a calculation to see steps.";
+    document.getElementById("stepDetails").innerHTML = defaultSteps;
+    return;
+}
+
 //------------------------------------------------------------------------------------------------------------------------
 //     
 //                                                  Supporting FUNCTIONS
@@ -94,9 +100,9 @@ function approximateLog(x) {
 //------------------------------------------------------------------------------------------------------------------------
 //
 //                                          Function to get input numbers as an array
-function getNumbers() {
+function getNumbers(split) {
     const input = document.getElementById("numbers").value;
-    return input.split(",").map(Number).filter(num => !isNaN(num));
+    return input.split(`${split}`).map(Number).filter(num => !isNaN(num));
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -114,7 +120,11 @@ function getNumbers() {
 //------------------------------------------------------------------------------------------------------------------------
 
 function calculateLogarithm() {
-    const numbers = getNumbers(",");
+    defaultSteps();
+    let numbers = getNumbers(",");
+    if(numbers.length === 0){
+        numbers = getNumbers(" ");
+    }
   
     if (numbers.length !== 2) {
         showError("Please enter two numbers separated by a comma for base and value.");
@@ -135,7 +145,7 @@ function calculateLogarithm() {
     const logResult = logValue / logBase;
     displayResult(`Logarithm: ${logResult.toFixed(2)}`);
 
-     const steps = `
+     let steps = `
         <p>1. Entered base: ${base}, Entered exponent: ${value}</p>
         <p>2. Calculated ln(${base}) ≈ ${logBase.toFixed(4)}</p>
         <p>3. Calculated ln(${value}) ≈ ${logValue.toFixed(4)}</p>
@@ -149,45 +159,56 @@ function calculateLogarithm() {
 //------------------------------------------------------------------------------------------------------------------------
 
 function calculateMAD(){
+    defaultSteps();
     let numbers = getNumbers(",");
-    if(numbers.length ===0 || numbers.length <0){
+    if(numbers.length === 0){
         numbers = getNumbers(" ");
     }
     const len = numbers.length;
-    if(len === 0) return showError("Please enter a valid input.");
+    if(len === 0) {
+        showError("Please enter a valid input."); 
+        return;
+    }
+
+    // Caculting the mean, x̄
     let sum = 0;
     for (let i =0; i< len; i++){
         sum += numbers[i];
     }
     const mean = sum/numbers.length;
 
-    let abs_diff= 0;
-    for (let i = 0; i< len; i++){
-        let dif = numbers[i] - mean;
-        if (dif<0){
-            dif*=-1
-        }
-        abs_diff += dif
+    // Caculate ∑|x - x̄| (the sum of absolute difference from the mean)
+    let sum_abs_dif = 0;
+    for (let i = 0; i < len; i++){
+        let abs_dif = absolute_custom(numbers[i] - mean);
+        sum_abs_dif += abs_dif;
     }
 
-    const mad = abs_diff/len
-    displayResult(`Mean Absolute Difference : ${mad.toFixed(2)}`)
+    // Calculating the Mean Absolute Deviation 
+    const mad = sum_abs_dif/len;
+    displayResult(`Mean Absolute Difference : ${mad.toFixed(2)}`);
+    
+
    // displaySteps(`a, b, cx`)
-    const steps = `
-        <p>1. </p>
-        <p>2. </p>
-        <p>3. </p>
-        <p>4. </p>
-      
-    `;
+    let steps = `
+        <p><i>Mean Absolute Deviation</i> (<sup>∑|x - x̄|</sup>&frasl;<sub>n</sub>)
+        <p>0. Entered values : ${numbers.join(', ')} (n = ${len})</p>
+        <p>1. Calculating x̄ : <br/><br/> x̄ = (${numbers.join(' + ')})/${len} <br/> x̄ = ${mean} </p>
+        <p>2. Caculating ∑|x - x̄| : <br/><br/> ∑|x - x̄| = ${numbers.join(` - ${mean} + `)} - ${mean} <br/> ∑|x - x̄| = ${sum_abs_dif} </p>
+        <p>3. Calculating <sup>∑|x - x̄|</sup>&frasl;<sub>n</sub> : <br/><br/> <sup>∑|x - x̄|</sup>&frasl;<sub>n</sub> = ${sum_abs_dif}/${len} <br/> <sup>∑|x - x̄|</sup>&frasl;<sub>n</sub> = ${mad.toFixed(2)} </p>`;
     document.getElementById("stepDetails").innerHTML = steps;
-    }
+    
+}
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to calculate Standard Deviation
 //------------------------------------------------------------------------------------------------------------------------
 
 function calculateStandardDeviation() {
-    const numbers = getNumbers(",");
+    defaultSteps();
+    let numbers = getNumbers(",");
+    if(numbers.length === 0){
+        numbers = getNumbers(" ");
+    }
     if (numbers.length === 0) return showError("Please enter valid numbers.");
 
 // Calculate the mean
@@ -208,7 +229,7 @@ const variance = varianceSum / numbers.length;
 const stdDev = sqrt_custom(variance);
     displayResult(`Standard Deviation: ${stdDev.toFixed(2)}`);
 
-    const steps = `
+    let steps = `
         <p>1. </p>
         <p>2. </p>
         <p>3. </p>
@@ -222,7 +243,6 @@ const stdDev = sqrt_custom(variance);
 
 
 
-
 //Utility Function
 function displayResult(message) {
     document.getElementById("result").textContent = message;
@@ -230,18 +250,6 @@ function displayResult(message) {
 //Error Function
 function showError(message) {
     alert(message);
-}
-
-function displaySteps(message){
-    document.getElementById("steps").textContent = message;
-}
-
-function showSteps(){
-    document.getElementById("steps").style.visibility = "visibile";
-}
-
-function hideSteps(){
-    document.getElementById("steps").style.visibility = "hidden";
 }
 
 
