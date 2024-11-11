@@ -11,11 +11,103 @@ function toggleSteps() {
     }
 }
 
-// Function to get input numbers as an array
+//------------------------------------------------------------------------------------------------------------------------
+//     
+//                                                  Supporting FUNCTIONS
+//
+//------------------------------------------------------------------------------------------------------------------------
+//
+//                                          Function to replace math.abs
+function absolute_custom(x) {
+    return x < 0 ? -x : x;
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//
+//                                       Function to calculate SQUARE ROOT         
+
+function sqrt_custom(x) {
+    if (x < 0) return NaN; 
+    if (x === 0 || x === 1) return x;
+
+    let guess = x;
+    let epsilon = 0.00001;
+
+    while (absolute(guess * guess - x) > epsilon) {
+        guess = (guess + x / guess) / 2;
+    }
+
+    return guess;
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+//
+//                                           Function to calculate SQUARE (x)^2 
+
+function square_custom(x){
+    
+        return x * x;
+
+}
+//------------------------------------------------------------------------------------------------------------------------
+//
+//                              Function to calculate the x raised to the power of y (x^y)
+
+function Power(base, exponent) {
+    let result = 1;
+    let currentBase = base;
+    let currentExponent = exponent;
+
+    if (currentExponent < 0) {
+        currentExponent = -currentExponent;
+        for (let i = 0; i < currentExponent; i++) {
+            result *= currentBase;
+        }
+        result = 1 / result;
+    } else {
+        for (let i = 0; i < currentExponent; i++) {
+            result *= currentBase;
+        }
+    }
+
+    return result;
+}
+//------------------------------------------------------------------------------------------------------------------------
+//
+//                       Function to approximate the natural logarithm (ln) using a series expansion
+
+function approximateLog(x) {
+    if (x <= 0) return NaN;
+    if (x === 1) return 0;
+
+    let result = 0;
+    const n = 10000; 
+    const y = (x - 1) / (x + 1);
+
+    for (let i = 0; i < n; i++) {
+        const term = (2 / (2 * i + 1)) * Power(y, 2 * i + 1);
+        result += term;
+    }
+
+    return result;
+}
+//------------------------------------------------------------------------------------------------------------------------
+//
+//                                          Function to get input numbers as an array
 function getNumbers() {
     const input = document.getElementById("numbers").value;
     return input.split(",").map(Number).filter(num => !isNaN(num));
 }
+
+//------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//                                                  MAIN FUNCTIONS
+
+
 
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to calculate Logarithm
@@ -52,43 +144,6 @@ function calculateLogarithm() {
     document.getElementById("stepDetails").innerHTML = steps;    
 }
 
-// This method approximates the natural logarithm (ln) using a series expansion
-function approximateLog(x) {
-    if (x <= 0) return NaN;
-    if (x === 1) return 0;
-
-    let result = 0;
-    const n = 10000; 
-    const y = (x - 1) / (x + 1);
-
-    for (let i = 0; i < n; i++) {
-        const term = (2 / (2 * i + 1)) * Power(y, 2 * i + 1);
-        result += term;
-    }
-
-    return result;
-}
-
-// This method manually calculates exponential numbers
-function Power(base, exponent) {
-    let result = 1;
-    let currentBase = base;
-    let currentExponent = exponent;
-
-    if (currentExponent < 0) {
-        currentExponent = -currentExponent;
-        for (let i = 0; i < currentExponent; i++) {
-            result *= currentBase;
-        }
-        result = 1 / result;
-    } else {
-        for (let i = 0; i < currentExponent; i++) {
-            result *= currentBase;
-        }
-    }
-
-    return result;
-}
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to calculate Mean Absolute Deviation
 //------------------------------------------------------------------------------------------------------------------------
@@ -134,9 +189,23 @@ function calculateMAD(){
 function calculateStandardDeviation() {
     const numbers = getNumbers(",");
     if (numbers.length === 0) return showError("Please enter valid numbers.");
-    const mean = numbers.reduce((acc, num) => acc + num, 0) / numbers.length;
-    const variance = numbers.reduce((acc, num) => acc + Math.pow(num - mean, 2), 0) / numbers.length;
-    const stdDev = Math.sqrt(variance);
+
+// Calculate the mean
+let sum = 0;
+for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+}
+const mean = sum / numbers.length;
+
+// Calculate the variance
+let varianceSum = 0;
+for (let i = 0; i < numbers.length; i++) {
+    varianceSum += square_custom(numbers[i] - mean);
+}
+const variance = varianceSum / numbers.length;
+    
+
+const stdDev = sqrt_custom(variance);
     displayResult(`Standard Deviation: ${stdDev.toFixed(2)}`);
 
     const steps = `
@@ -150,6 +219,8 @@ function calculateStandardDeviation() {
 
     
 }
+
+
 
 
 //Utility Function
