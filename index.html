@@ -36,10 +36,11 @@
     <h3>Results:</h3>
     <p id="result"> </p>
 
-        <button onclick="showDetails()">Show Steps</button>
-        <button onclick="hideDetails()">Hide Steps</button>
-    <h3>Steps:</h3>
-    <p id="steps" style="visibility: hidden"> </p>
+         <button id="toggleStepsButton" onclick="toggleSteps()">Show Steps</button>
+    <div id="steps" style="display: none; margin-top: 20px; text-align: left;">
+        <h4>Detailed Steps:</h4>
+        <p id="stepDetails">No steps to show yet. Perform a calculation to see steps.</p>
+    </div>
 
     <script src="Script1.js"></script>
    
