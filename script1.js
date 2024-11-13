@@ -242,7 +242,7 @@ const stdDev = sqrt_custom(variance);
 }
 
 //------------------------------------------------------------------------------------------------------------------------
-//                                           Function to calculate Arccos
+//                                           Function to approximate Arccos
 //------------------------------------------------------------------------------------------------------------------------
 
 function calculateArccos() {
@@ -262,32 +262,44 @@ function calculateArccos() {
   const b = numbers[1];
   const c = numbers[2];
 
-  cosVal = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c);
+  const cosVal = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c);
     
 //approximate arccos using Taylor expansion
   const val = cosVal;
+  const sqrt2 = 2 ** (1/2);
+  const term = (val + 1) ** (1/2);
+  const term2 = (1 - val) ** (1/2);
 
   if (val < -1 || val > 1) {
     showError("Invalid triangle. Please check your side lengths and re-enter.");
     return;
-  } else if (val == 1) {
-    const arccosResult = 0;
+  } 
+  else if (val > 0.8 && val <= 1) {
+    const approxResult = 
+    	0 -
+    	(sqrt2 * term2) - 
+    	(term2 ** 3) / (6 * sqrt2) - 
+    	(3 * (term2 ** 5)) / (80 * sqrt2) - 
+        (5 * (term2 ** 7)) / (448 * sqrt2);
+    const arccosResult = approxResult * (-1);
     displayResult(`Arccos:${arccosResult.toFixed(2)}`);
-  } else if (val == -1) {
-    const arccosResult = 3.14;
+  } 
+  else if (val >= -1 && val < -0.8) {
+  	const arccosResult = 
+    	3.1415926535 -
+    	(sqrt2 * term) -
+    	(term ** 3) / (6 * sqrt2) - 
+    	(3 * term ** 5) / (80 * sqrt2) - 
+        (5 * term ** 7) / (448 * sqrt2);
     displayResult(`Arccos:${arccosResult.toFixed(2)}`);
-  } else {
+  } 
+  else {
     const arccosResult =
-      3.1415926535 / 2 -
-      val -
-      val ** 3 / 6 -
-      (3 * val ** 5) / 40 -
-      (5 * val ** 7) / 112 -
-      (35 * val ** 9) / 1152 -
-      (63 * val ** 11) / 2816 -
-      (231 * val ** 13) / 13312 -
-      (143 * val ** 15) / 10240 -
-      (6435 * val ** 17) / 557056;
+        3.1415926535 / 2 -
+        val -
+        val ** 3 / 6 -
+        (3 * val ** 5) / 40 -
+        (5 * val ** 7) / 112;
     displayResult(`Arccos:${arccosResult.toFixed(2)}`);
   }
 }
