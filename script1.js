@@ -106,8 +106,11 @@ function getNumbers(split) {
 }
 
 //------------------------------------------------------------------------------------------------------------------------
-
-
+//
+//                                          Function to convert radians to degrees
+function radiansToDegrees(rads) {
+		return rads * (180 / 3.1415926535);
+}
 
 
 
@@ -265,43 +268,65 @@ function calculateArccos() {
   const cosVal = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c);
     
 //approximate arccos using Taylor expansion
-  const val = cosVal;
+  var arccosResult;
+  var degrees;
   const sqrt2 = 2 ** (1/2);
-  const term = (val + 1) ** (1/2);
-  const term2 = (1 - val) ** (1/2);
+  const term = (cosVal + 1) ** (1/2);
+  const term2 = (1 - cosVal) ** (1/2);
 
-  if (val < -1 || val > 1) {
+  if (cosVal < -1 || cosVal > 1) {
     showError("Invalid triangle. Please check your side lengths and re-enter.");
     return;
   } 
-  else if (val > 0.8 && val <= 1) {
+  else if (cosVal > 0.8 && cosVal <= 1) {
     const approxResult = 
     	0 -
     	(sqrt2 * term2) - 
     	(term2 ** 3) / (6 * sqrt2) - 
     	(3 * (term2 ** 5)) / (80 * sqrt2) - 
-        (5 * (term2 ** 7)) / (448 * sqrt2);
-    const arccosResult = approxResult * (-1);
-    displayResult(`Arccos:${arccosResult.toFixed(2)}`);
+      (5 * (term2 ** 7)) / (448 * sqrt2);
+    arccosResult = approxResult * (-1);
+    degrees = radiansToDegrees(arccosResult);
+    displayResult(`Arccos:${arccosResult.toFixed(2)} radians/${degrees.toFixed(2)} degrees`);
   } 
-  else if (val >= -1 && val < -0.8) {
-  	const arccosResult = 
+  else if (cosVal >= -1 && cosVal < -0.8) {
+  	arccosResult = 
     	3.1415926535 -
     	(sqrt2 * term) -
     	(term ** 3) / (6 * sqrt2) - 
     	(3 * term ** 5) / (80 * sqrt2) - 
-        (5 * term ** 7) / (448 * sqrt2);
-    displayResult(`Arccos:${arccosResult.toFixed(2)}`);
+      (5 * term ** 7) / (448 * sqrt2);
+    degrees = radiansToDegrees(arccosResult);
+    displayResult(`Arccos:${arccosResult.toFixed(2)} radians/${degrees.toFixed(2)} degrees`);
   } 
   else {
-    const arccosResult =
-        3.1415926535 / 2 -
-        val -
-        val ** 3 / 6 -
-        (3 * val ** 5) / 40 -
-        (5 * val ** 7) / 112;
-    displayResult(`Arccos:${arccosResult.toFixed(2)}`);
+    arccosResult =
+      3.1415926535 / 2 -
+      cosVal -
+      cosVal ** 3 / 6 -
+      (3 * cosVal ** 5) / 40 -
+      (5 * cosVal ** 7) / 112;
+    degrees = radiansToDegrees(arccosResult);
+    displayResult(`Arccos: ${arccosResult.toFixed(2)} radians/${degrees.toFixed(2)} degrees`);
   }
+  
+  //show steps
+  let steps = `
+        <p> Entered values : ${numbers.join(', ')}  </p>
+        <p> ${a} = opposite edge, ${b} & ${c} = adjacent edges </p>
+        <p><i>1. Calculate cosine:</i></p>
+        <p> cos(θ) = (${b}<sup>2</sup> + ${c}<sup>2</sup> - ${a}<sup>2</sup>) / (2(${b})(${c})) </p>				 			<p> cos(θ) = ${cosVal.toFixed(2)} </p>
+        <p><i>2. Approximate arccos:</i></p>
+        <p> arccos(${cosVal.toFixed(2)}) = &sum; [(${cosVal.toFixed(2)}<sup>1+2k</sup>) / (k! +2kk!)]
+        (1/2)<sub>k</sub>  for: 0 &le; k &le; &infin; </p>
+        <p> arccos(${cosVal.toFixed(2)}) = ${arccosResult.toFixed(2)} radians </p>
+        <p><i>3. Convert to Degrees:</i></p>
+        <p> degrees = ${arccosResult.toFixed(2)}(180 / &pi;) </p>
+        <p> degrees = ${degrees.toFixed(2)} </p>
+        `;
+        
+  document.getElementById("stepDetails").innerHTML = steps;
+
 }
 
 
