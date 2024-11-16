@@ -373,4 +373,14 @@ function showError(message) {
     alert(message);
 }
 
+function ExcelRead()
+{
+    var excelFile = Excel.Open("C:\\temp\\DataStorageExcel.xlsx");
+  var excelSheet = excelFile.SheetByTitle("Sheet1");
+
+  var valueA = excelSheet.Cell("A", 3).Value;
+  var valueB = excelSheet.Cell(2, 3).Value;
+  var valueC = excelSheet.CellByName("C3").Value;
+}
+
 
