@@ -200,6 +200,8 @@ function calculateMAD(){
         <p>2. Caculating ∑|x - x̄| : <br/><br/> ∑|x - x̄| = ${numbers.join(` - ${mean} + `)} - ${mean} <br/> ∑|x - x̄| = ${sum_abs_dif} </p>
         <p>3. Calculating <sup>∑|x - x̄|</sup>&frasl;<sub>n</sub> : <br/><br/> <sup>∑|x - x̄|</sup>&frasl;<sub>n</sub> = ${sum_abs_dif}/${len} <br/> <sup>∑|x - x̄|</sup>&frasl;<sub>n</sub> = ${mad.toFixed(2)} </p>`;
     document.getElementById("stepDetails").innerHTML = steps;
+
+    exportData('Mean Absolute Deviation', numbers, mad);
     
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -373,14 +375,19 @@ function showError(message) {
     alert(message);
 }
 
-function ExcelRead()
-{
-    var excelFile = Excel.Open("C:\\temp\\DataStorageExcel.xlsx");
-  var excelSheet = excelFile.SheetByTitle("Sheet1");
-
-  var valueA = excelSheet.Cell("A", 3).Value;
-  var valueB = excelSheet.Cell(2, 3).Value;
-  var valueC = excelSheet.CellByName("C3").Value;
-}
-
-
+//------------------------------------------------------------------------------------------------------------------------
+//                                           Exporting to Excel
+//------------------------------------------------------------------------------------------------------------------------
+async function exportCalculation(functionType, input, output) {
+    try {
+      const response = await fetch('/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ functiontype: functionType, input, output }),
+      });
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error('Error exporting data:', error);
+    }
+  }
