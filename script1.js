@@ -39,7 +39,7 @@ function sqrt_custom(x) {
     let guess = x;
     let epsilon = 0.00001;
 
-    while (absolute(guess * guess - x) > epsilon) {
+    while (absolute_custom(guess * guess - x) > epsilon) {
         guess = (guess + x / guess) / 2;
     }
 
@@ -209,40 +209,72 @@ function calculateMAD(){
 function calculateStandardDeviation() {
     defaultSteps();
     let numbers = getNumbers(",");
-    if(numbers.length === 0){
+    if (numbers.length === 0) {
         numbers = getNumbers(" ");
     }
     if (numbers.length === 0) return showError("Please enter valid numbers.");
 
-// Calculate the mean
-let sum = 0;
-for (let i = 0; i < numbers.length; i++) {
-    sum += numbers[i];
-}
-const mean = sum / numbers.length;
+    // mean
+    let sum = 0;
+    for (let i = 0; i < numbers.length; i++) {
+        sum += numbers[i];
+    }
+    const mean = sum / numbers.length;
 
-// Calculate the variance
-let varianceSum = 0;
-for (let i = 0; i < numbers.length; i++) {
-    varianceSum += square_custom(numbers[i] - mean);
-}
-const variance = varianceSum / numbers.length;
-    
+    // variance -- population
+    let varianceSum = 0;
+    for (let i = 0; i < numbers.length; i++) {
+        varianceSum += square_custom(numbers[i] - mean);
+    }
+    const variancePopulation = varianceSum / numbers.length;
 
-const stdDev = sqrt_custom(variance);
-    displayResult(`Standard Deviation: ${stdDev.toFixed(2)}`);
+    //variance -- sample
+    const varianceSample = varianceSum / (numbers.length - 1);
+
+    //standard deviation -- both
+    const stdDevP = sqrt_custom(variancePopulation); // Population
+    const stdDevS = sqrt_custom(varianceSample); // Sample
+
+    displayResult(`Standard Deviation (Population): ${stdDevP.toFixed(3)} & Standard Deviation (Sample): ${stdDevS.toFixed(3)}`);
+
+    //steps
+    const numbersList = numbers.join(", ");
+    const meanFormula = `${numbers.map(n => n).join(" + ")} / ${numbers.length}`;
+    const varianceFormulaPopulation = numbers
+        .map(n => `(${n} - ${mean.toFixed(3)})²`)
+        .join(" + ");
+    const varianceCalculationPopulation = numbers
+        .map(n => square_custom(n - mean).toFixed(3))
+        .join(" + ");
+
+    const varianceFormulaSample = `Σ(xᵢ - μ)² / (N - 1)`;
+    const varianceSampleCalculation = `(${varianceCalculationPopulation}) / (${numbers.length} - 1) = ${varianceSample.toFixed(3)}`;
 
     let steps = `
-        <p>1. </p>
-        <p>2. </p>
-        <p>3. </p>
-        <p>4. </p>
-      
-    `;
-    document.getElementById("stepDetails").innerHTML = steps;
-
-    
+    <p><strong>1. Gather the data points:</strong> <br><br>${numbersList}</p>
+    <p><strong>2. Calculate the mean (average):</strong> Mean: μ = Σx / N <br><br>
+        μ = (${meanFormula}) = ${mean.toFixed(3)}<br><br>
+    </p>
+    <h3>Population:</h3>
+    <p><strong>3. Calculate the population variance:</strong> Variance (Population): σ² = Σ(xᵢ - μ)² / N <br><br>
+        σ² = [${varianceFormulaPopulation}] / ${numbers.length} <br>
+        σ² = (${varianceCalculationPopulation}) / ${numbers.length} = ${variancePopulation.toFixed(3)}
+    </p>
+    <p><strong>4. Calculate the population standard deviation:</strong> Standard Deviation: σ = √σ² <br><br>
+        σ = √${variancePopulation.toFixed(3)} ≈ ${stdDevP.toFixed(3)}<br><br>
+    </p>
+    <h3>Sample:</h3>
+    <p><strong>3. Calculate the sample variance:</strong> Variance (Sample): σ² = Σ(xᵢ - μ)² / (N - 1) <br><br>
+        ${varianceFormulaSample} <br>
+        = ${varianceSampleCalculation}
+    </p>
+    <p><strong>4. Calculate the sample standard deviation:</strong> Standard Deviation: s = √σ² <br><br>
+        s = √${varianceSample.toFixed(3)} ≈ ${stdDevS.toFixed(3)}
+    </p>
+`;
+document.getElementById("stepDetails").innerHTML = steps;
 }
+
 
 //------------------------------------------------------------------------------------------------------------------------
 //                                           Function to approximate Arccos
