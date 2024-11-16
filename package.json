@@ -1,10 +1,1 @@
-{  
-    "name": "excel_read_parse",
-    "description": "description",
-    "authors": "author",
-    "version": "1.0.0",
-    "main": "pathToMain",
-    "dependencies": {
-        "xlsx": "https://cdn.sheetjs.com/xlsx-latest/xlsx-latest.tgz"
-    }
-}
+{"name":"excel_read_parse","description":"description","authors":"author","version":"1.0.0","main":"pathToMain","dependencies":{"body-parser":"^1.20.3","express":"^4.21.1","xlsx":"https://cdn.sheetjs.com/xlsx-latest/xlsx-latest.tgz"}}
