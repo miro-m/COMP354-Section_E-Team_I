@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eternity Calculator</title>
+    <!-- Link to Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap">
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="#" id="calculatorTab" onclick="showCalculator()">Calculator</a></li>
+            <li><a href="#" id="instructionsTab" onclick="showInstructions()">Instructions</a></li>
+        </ul>
+    </nav>
+
+    <!-- Calculator Section -->
+    <section id="calculatorSection">
+        <div class="calculator-container">
+            <!-- Display Screen -->
+            <div id="display">
+                <input type="text" id="numbers" placeholder="0" readonly>
+            </div>
+            <!-- Buttons Grid -->
+            <div class="button-grid">
+                <!-- First Row -->
+                <button onclick="clearDisplay()" class="function-button">C</button>
+                <button onclick="backspace()" class="function-button">←</button>
+                <button onclick="insertOperator('/')" class="operator-button">÷</button>
+                <button onclick="insertOperator('*')" class="operator-button">×</button>
+                <!-- Second Row -->
+                <button onclick="insertNumber('7')">7</button>
+                <button onclick="insertNumber('8')">8</button>
+                <button onclick="insertNumber('9')">9</button>
+                <button onclick="insertOperator('-')" class="operator-button">−</button>
+                <!-- Third Row -->
+                <button onclick="insertNumber('4')">4</button>
+                <button onclick="insertNumber('5')">5</button>
+                <button onclick="insertNumber('6')">6</button>
+                <button onclick="insertOperator('+')" class="operator-button">+</button>
+                <!-- Fourth Row -->
+                <button onclick="insertNumber('1')">1</button>
+                <button onclick="insertNumber('2')">2</button>
+                <button onclick="insertNumber('3')">3</button>
+                <button onclick="calculateResult()" class="equal-button">=</button>
+                <!-- Fifth Row -->
+                <button onclick="insertDecimal()">.</button>
+                <button onclick="insertNumber('0')">0</button>
+                <button onclick="nextInput()" class="function-button">Next</button>
+                <!-- Advanced Functions -->
+                <button onclick="calculateSquareRoot()" class="advanced-button">√x</button>
+                <button onclick="calculateSquare()" class="advanced-button">x²</button>
+                <button onclick="calculatePower()" class="advanced-button">xʸ</button>
+                <button onclick="calculateLogarithm()" class="advanced-button">log<sub>b</sub>x</button>
+                <button onclick="calculateMAD()" class="advanced-button">MAD</button>
+                <button onclick="calculateStandardDeviation()" class="advanced-button">Std Dev</button>
+                <button onclick="calculateArccos()" class="advanced-button">Arccos</button>
+            </div>
+        </div>
+
+        <!-- Steps Section -->
+        <div class="steps-container">
+            <button onclick="toggleSteps()" id="toggleStepsButton" class="function-button">Show Steps</button>
+            <div id="steps" style="display: none;">
+                <h4>Detailed Steps:</h4>
+                <p id="stepDetails">No steps to show yet. Perform a calculation to see steps.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructions Section -->
+    <section id="instructionsSection" style="display: none;">
+        <div class="instructions-container">
+            <h2>Instructions</h2>
+            <div class="instructions-content">
+                <!-- Include instructions for each function here -->
+                <h3>Basic Operations</h3>
+                <p><strong>Addition (+):</strong> Enter the first number, press '+', enter the second number, and press '=' to get the result.</p>
+                <p><strong>Subtraction (−):</strong> Enter the first number, press '−', enter the second number, and press '=' to get the result.</p>
+                <p><strong>Multiplication (×):</strong> Enter the first number, press '×', enter the second number, and press '=' to get the result.</p>
+                <p><strong>Division (÷):</strong> Enter the first number, press '÷', enter the second number, and press '=' to get the result.</p>
+
+                <h3>Advanced Functions</h3>
+                <p><strong>Square Root (√x):</strong> Press '√x', enter the number, and press '=' to get the square root.</p>
+                <p><strong>Square (x²):</strong> Press 'x²', enter the number, and press '=' to get the square.</p>
+                <p><strong>Power (xʸ):</strong> Press 'xʸ', enter the base number, press 'Next', enter the exponent, and press '=' to get the result.</p>
+                <p><strong>Logarithm (log<sub>b</sub>x):</strong> Press 'log<sub>b</sub>x', enter the value (x), press 'Next', enter the base (b), and press '=' to get the logarithm.</p>
+                <p><strong>Mean Absolute Deviation (MAD):</strong> Press 'MAD', enter the number of values, input each value followed by 'Next', and press '=' to calculate the MAD.</p>
+                <p><strong>Standard Deviation (Std Dev):</strong> Press 'Std Dev', enter the number of values, input each value followed by 'Next', and press '=' to calculate the standard deviation.</p>
+                <p><strong>Arccos:</strong> Press 'Arccos', enter side lengths a, b, and c, pressing 'Next' after each, and press '=' to calculate the angle.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include your JavaScript file -->
+    <script src="Script1.js"></script>
+</body>
+</html>

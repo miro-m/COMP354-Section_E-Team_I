@@ -1,0 +1,207 @@
+/* Body styling */
+body {
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #1e1e1e;
+    overflow: hidden;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    flex: 1;
+}
+
+nav ul li a {
+    display: block;
+    color: #00ffcc;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    background-color: #2d2d2d;
+}
+
+/* Calculator container styling */
+.calculator-container {
+    max-width: 400px;
+    margin: 20px auto;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+/* Display screen styling */
+#display {
+    width: 100%;
+    background-color: #2d2d2d;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+#display input {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #00ffcc;
+    font-size: 2em;
+    text-align: right;
+    outline: none;
+}
+
+/* Button grid styling */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* Button styling */
+button {
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    background: #2d2d2d;
+    color: #ffffff;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background: #3e3e3e;
+    transform: scale(1.05);
+}
+
+button:active {
+    background: #4f4f4f;
+    transform: scale(1);
+}
+
+/* Special button styles */
+.function-button {
+    background: #00adb5;
+}
+
+.function-button:hover {
+    background: #00c5cc;
+}
+
+.operator-button {
+    background: #393e46;
+}
+
+.operator-button:hover {
+    background: #4a4f57;
+}
+
+.equal-button {
+    background: #00adb5;
+    color: #ffffff;
+}
+
+.equal-button:hover {
+    background: #00c5cc;
+}
+
+.advanced-button {
+    background: #222831;
+    font-size: 1em;
+}
+
+.advanced-button:hover {
+    background: #333a40;
+}
+
+/* Steps container styling */
+.steps-container {
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+#toggleStepsButton {
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 10px;
+    background: #00adb5;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+#toggleStepsButton:hover {
+    background: #00c5cc;
+}
+
+#steps {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    display: none; /* Hidden by default */
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+#steps h4 {
+    margin-top: 0;
+    color: #00ffcc;
+}
+
+#stepDetails p {
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+/* Instructions section styling */
+.instructions-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.instructions-content {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.instructions-content h3 {
+    color: #00ffcc;
+}
+
+.instructions-content p {
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+.instructions-content strong {
+    color: #00adb5;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 400px) {
+    .calculator-container, .steps-container {
+        width: 90%;
+    }
+}
