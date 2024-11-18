@@ -309,7 +309,7 @@ function calculatePower() {
 // Function to perform Power calculation
 function performPower() {
     const [base, exponent] = getNumbers();
-    const result = Power(base, exponent);
+    const result = power_custom(base, exponent);
     displayResult(result.toFixed(4));
 
     let steps = `
@@ -341,8 +341,8 @@ function performLogarithm() {
         return;
     }
 
-    const logBase = approximateLog(base);
-    const logValue = approximateLog(value);
+    const logBase = approximateLog_custom(base);
+    const logValue = approximateLog_custom(value);
 
     const logResult = logValue / logBase;
     displayResult(logResult.toFixed(4));
@@ -481,16 +481,47 @@ function calculateArccos() {
 // Function to perform Arccos calculation
 function performArccos() {
     const [a, b, c] = getNumbers();
-
     const cosVal = (b ** 2 + c ** 2 - a ** 2) / (2 * b * c);
+
+    //approximate arccos using Taylor expansion
+    var arccosResult;
+    var degrees;
+    const sqrt2 = 2 ** (1/2);
+    const term = (cosVal + 1) ** (1/2);
+    const term2 = (1 - cosVal) ** (1/2);
 
     if (cosVal < -1 || cosVal > 1) {
         showError("Invalid triangle. Please check your side lengths.");
         return;
     }
-
-    const arccosResult = Math.acos(cosVal);
-    const degrees = radiansToDegrees(arccosResult);
+    else if (cosVal > 0.8 && cosVal <= 1) {
+        const approxResult = 
+            0 -
+            (sqrt2 * term2) - 
+            (term2 ** 3) / (6 * sqrt2) - 
+            (3 * (term2 ** 5)) / (80 * sqrt2) - 
+          (5 * (term2 ** 7)) / (448 * sqrt2);
+        arccosResult = approxResult * (-1);
+        degrees = radiansToDegrees_custom(arccosResult);
+      } 
+      else if (cosVal >= -1 && cosVal < -0.8) {
+          arccosResult = 
+            3.1415926535 -
+            (sqrt2 * term) -
+            (term ** 3) / (6 * sqrt2) - 
+            (3 * term ** 5) / (80 * sqrt2) - 
+          (5 * term ** 7) / (448 * sqrt2);
+        degrees = radiansToDegrees_custom(arccosResult);
+      } 
+      else {
+        arccosResult =
+          3.1415926535 / 2 -
+          cosVal -
+          cosVal ** 3 / 6 -
+          (3 * cosVal ** 5) / 40 -
+          (5 * cosVal ** 7) / 112;
+        degrees = radiansToDegrees_custom(arccosResult);
+      }
 
     displayResult(degrees.toFixed(4) + '°');
 
@@ -530,10 +561,10 @@ function sqrt_custom(x) {
 }
 
 // Function to calculate x raised to the power y
-function Power(base, exponent) {
+function power_custom(base, exponent) {
     let result = 1;
     let isNegativeExponent = exponent < 0;
-    let currentExponent = Math.abs(exponent);
+    let currentExponent = absolute_custom(exponent);
 
     for (let i = 0; i < currentExponent; i++) {
         result *= base;
@@ -547,7 +578,7 @@ function Power(base, exponent) {
 }
 
 // Function to approximate natural logarithm (ln)
-function approximateLog(x) {
+function approximateLog_custom(x) {
     if (x <= 0) return NaN;
     if (x === 1) return 0;
 
@@ -556,7 +587,7 @@ function approximateLog(x) {
     const y = (x - 1) / (x + 1);
 
     for (let i = 0; i < n; i++) {
-        const term = (2 / (2 * i + 1)) * Power(y, 2 * i + 1);
+        const term = (2 / (2 * i + 1)) * power_custom(y, 2 * i + 1);
         result += term;
     }
 
@@ -564,7 +595,7 @@ function approximateLog(x) {
 }
 
 // Function to convert radians to degrees
-function radiansToDegrees(rads) {
+function radiansToDegrees_custom(rads) {
     return rads * (180 / Math.PI);
 }
 
