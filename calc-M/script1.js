@@ -387,11 +387,22 @@ function performMAD() {
         return;
     }
 
-    const sum = numbers.reduce((acc, num) => acc + num, 0);
-    const mean = sum / len;
-    const sumAbsDiff = numbers.reduce((acc, num) => acc + absolute_custom(num - mean), 0);
-    const mad = sumAbsDiff / len;
-    displayResult(mad.toFixed(4));
+    // Caculting the mean, x̄
+    let sum = 0;
+    for (let i =0; i< len; i++){
+        sum += numbers[i];
+    }
+    const mean = sum/numbers.length;
+
+    // Caculate ∑|x - x̄| (the sum of absolute difference from the mean)
+    let sum_abs_dif = 0;
+    for (let i = 0; i < len; i++){
+        let abs_dif = absolute_custom(numbers[i] - mean);
+        sum_abs_dif += abs_dif;
+    }
+
+    // Calculating the Mean Absolute Deviation 
+    const mad = sum_abs_dif/len;
 
     let steps = `
         <p><strong>Mean Absolute Deviation (MAD):</strong></p>
