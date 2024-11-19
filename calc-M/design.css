@@ -130,14 +130,14 @@ button:active {
     background: #333a40;
 }
 
-/* Steps container styling */
-.steps-container {
-    max-width: 400px;
-    margin: 20px auto;
-    text-align: center;
+.button-group {
+    display: flex;
+    gap: 10px; /* Add spacing between the buttons */
 }
 
-#toggleStepsButton {
+.button-group button {
+    flex: 1; /* Ensures both buttons are the same size */
+    text-align: center; /* Centers the text inside the buttons */
     margin-bottom: 10px;
     padding: 10px 20px;
     font-size: 1em;
@@ -149,13 +149,21 @@ button:active {
     transition: background 0.2s, transform 0.2s;
 }
 
+/* Steps container styling */
+.steps-container {
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+
 #toggleStepsButton:hover {
     background: #00c5cc;
 }
 
 #steps {
     background-color: #1e1e1e;
-    padding: 20px;
+    padding: 20px 20px;
     border-radius: 10px;
     display: none; /* Hidden by default */
     max-width: 400px;
