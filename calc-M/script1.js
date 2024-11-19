@@ -382,8 +382,9 @@ function performMAD() {
     const numbers = getNumbers();
     const len = numbers.length;
 
+
     if (len === 0) {
-        showError("Please enter valid numbers.");
+        showError("Please enter valid number of values.");
         return;
     }
 
@@ -403,6 +404,8 @@ function performMAD() {
 
     // Calculating the Mean Absolute Deviation 
     const mad = sum_abs_dif/len;
+
+    displayResult(`MAD: ${mad.toFixed(4)}`);
 
     let steps = `
         <p><strong>Mean Absolute Deviation (MAD):</strong></p>
