@@ -477,7 +477,7 @@ function calculateArccos() {
     advancedFunction = 'arccos';
     advancedInputs = [];
     expectedInputs = 3;
-    inputPrompt = ["Enter side length a:", "Enter side length b:", "Enter side length c:"];
+    inputPrompt = ["Enter opposite side length a:", "Enter adjacent side length b:", "Enter adjacent side length c:"];
     showPrompt(inputPrompt[0]);
 }
 
@@ -526,15 +526,15 @@ function performArccos() {
         degrees = radiansToDegrees_custom(arccosResult);
       }
 
-    displayResult(degrees.toFixed(4) + '°');
+    displayResult(degrees.toFixed(2) + '°');
 
     let steps = `
         <p><strong>Arccos Calculation:</strong></p>
         <p>1. Entered sides: a = ${a}, b = ${b}, c = ${c}</p>
         <p>2. Calculated cos(θ) using Law of Cosines:</p>
-        <p>cos(θ) = (b² + c² - a²) / (2bc) = ${cosVal.toFixed(4)}</p>
-        <p>3. Calculated θ = arccos(${cosVal.toFixed(4)}) = ${arccosResult.toFixed(4)} radians</p>
-        <p>4. Converted to degrees: θ = ${degrees.toFixed(4)}°</p>
+        <p>cos(θ) = (b² + c² - a²) / (2bc) = ${cosVal.toFixed(2)}</p>
+        <p>3. Calculated θ = arccos(${cosVal.toFixed(2)}) = ${arccosResult.toFixed(2)} radians</p>
+        <p>4. Converted to degrees: θ = ${degrees.toFixed(2)}°</p>
     `;
     document.getElementById("stepDetails").innerHTML = steps;
     currentInput = degrees.toString();
