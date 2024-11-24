@@ -64,14 +64,19 @@
         <!-- Steps & Export Section -->
         <div class="steps-container">
             <div class="button-group">
-                <button onclick="toggleSteps()" id="toggleStepsButton" class="function-button">Show Steps</button> 
-                <!-- <button onclick="exportData()" id="exportDataButton" class="function-button">Export Data</button> to be implemented-->
+                <button id="toggleStepsButton" onclick="toggleSteps()" class="function-button">Show Steps</button>
+                <button id="exportCsvButton" onclick="exportToCSV()" class="function-button" disabled>Export to CSV</button>
             </div>
             <div id="steps" style="display: none;">
                 <h4>Detailed Steps:</h4>
                 <p id="stepDetails">No steps to show yet. Perform a calculation to see steps.</p>
             </div>
+
         </div>
+
+        
+        
+
     </section>
 
     <!-- Instructions Section -->
@@ -98,6 +103,17 @@
         </div>
     </section>
 
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Input Required</h3>
+            <p id="modalMessage">How many numbers will you enter for MAD calculation?</p>
+            <input type="number" id="modalInput" min="1" step="1">
+            <div class="modal-buttons">
+                <button onclick="handleModalOK()" class="function-button">OK</button>
+                <button onclick="closeModal()" class="function-button">Cancel</button>
+            </div>
+        </div>
+    </div>
     <!-- Include your JavaScript file -->
     <script src="Script1.js"></script>
 </body>

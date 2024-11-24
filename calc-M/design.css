@@ -42,18 +42,19 @@ nav ul li a:hover, nav ul li a.active {
     max-width: 400px;
     margin: 20px auto;
     background-color: #1e1e1e;
-    padding: 20px;
+    padding: 10px 20px;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
 }
 
 /* Display screen styling */
 #display {
-    width: 100%;
+    width: calc(100% - 40px);
     background-color: #2d2d2d;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 #display input {
@@ -64,14 +65,19 @@ nav ul li a:hover, nav ul li a.active {
     font-size: 2em;
     text-align: right;
     outline: none;
+    box-sizing: border-box;
 }
 
 /* Button grid styling */
 .button-grid {
+    width: 100%;
+    box-sizing: border-box;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
 }
+
+/* Rest of your CSS remains unchanged */
 
 /* Button styling */
 button {
@@ -205,6 +211,73 @@ button:active {
 
 .instructions-content strong {
     color: #00adb5;
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Ensure it is above other elements */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black with opacity */
+}
+
+.modal-content {
+    background-color: #1e1e1e;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #00adb5;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    color: #00ffcc;
+}
+
+.modal-content p {
+    margin: 20px 0;
+}
+
+.modal-content input {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #2d2d2d;
+    color: #ffffff;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-buttons button {
+    width: 100px;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    background: #00adb5;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.modal-buttons button:hover {
+    background: #00c5cc;
 }
 
 /* Responsive Design */
