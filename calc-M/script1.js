@@ -239,6 +239,9 @@ function performAdvancedCalculation() {
         case 'arccos':
             performArccos();
             break;
+        case 'exponential':
+            performExponentialFunction();
+            break;
         default:
             break;
     }
@@ -260,7 +263,6 @@ function showBasicCalculationSteps(op1, oper, op2, res) {
 
 // Function to initiate square root calculation and prompt for input
 function calculateSquareRoot() {
-    // Removed defaultSteps();
     advancedFunction = 'sqrt';
     advancedInputs = [];
     expectedInputs = 1;
@@ -293,7 +295,6 @@ function performSquareRoot() {
 
 // Function to initiate square calculation and prompt for input
 function calculateSquare() {
-    // Removed defaultSteps();
     advancedFunction = 'square';
     advancedInputs = [];
     expectedInputs = 1;
@@ -322,7 +323,6 @@ function performSquare() {
 
 // Function to initiate power calculation and prompt for inputs
 function calculatePower() {
-    // Removed defaultSteps();
     advancedFunction = 'power';
     advancedInputs = [];
     expectedInputs = 2;
@@ -351,7 +351,6 @@ function performPower() {
 
 // Function to initiate logarithm calculation and prompt for inputs
 function calculateLogarithm() {
-    // Removed defaultSteps();
     advancedFunction = 'log';
     advancedInputs = [];
     expectedInputs = 2;
@@ -391,7 +390,6 @@ function performLogarithm() {
 
 // Function to calculate Mean Absolute Deviation (MAD)
 function calculateMAD() {
-    // Removed defaultSteps();
     advancedFunction = 'mad';
     advancedInputs = [];
     expectedInputs = 0; // Will be set after user input
@@ -464,7 +462,6 @@ function performMAD() {
 
 // Function to calculate Standard Deviation
 function calculateStandardDeviation() {
-    // Removed defaultSteps();
     advancedFunction = 'stddev';
     advancedInputs = [];
     expectedInputs = 0; // Will be set after user input
@@ -530,7 +527,6 @@ function performStandardDeviation() {
 
 // Function to calculate Arccos
 function calculateArccos() {
-    // Removed defaultSteps();
     advancedFunction = 'arccos';
     advancedInputs = [];
     expectedInputs = 3;
@@ -595,6 +591,37 @@ function performArccos() {
     document.getElementById("stepDetails").innerHTML = stepsHistory;
     document.getElementById('exportCsvButton').disabled = false; // Enable export button
     currentInput = degrees.toString();
+    resultDisplayed = true;
+}
+
+// Function to initiate exponential function calculation and prompt for inputs
+function calculateExponentialFunction() {
+    advancedFunction = 'exponential';
+    advancedInputs = [];
+    expectedInputs = 3;
+    inputPrompt = ["Enter the coefficient (a):", "Enter the base (b):", "Enter the exponent (x):"];
+    showPrompt(inputPrompt[0]);
+}
+
+// Function to perform Exponential Function calculation and display steps
+function performExponentialFunction() {
+    const [a, b, x] = getNumbers();
+
+    const powerResult = power_custom(b, x);
+    const result = a * powerResult;
+    displayResult(result.toFixed(4));
+
+    let steps = `
+        <hr>
+        <p><strong>Exponential Function Calculation:</strong></p>
+        <p>1. Entered coefficient a: ${a}, base b: ${b}, exponent x: ${x}</p>
+        <p>2. Calculated ${b}<sup>${x}</sup> = ${powerResult.toFixed(4)}</p>
+        <p>3. Calculated ${a} × ${powerResult.toFixed(4)} = ${result.toFixed(4)}</p>
+    `;
+    stepsHistory += steps;
+    document.getElementById("stepDetails").innerHTML = stepsHistory;
+    document.getElementById('exportCsvButton').disabled = false; // Enable export button
+    currentInput = result.toString();
     resultDisplayed = true;
 }
 
