@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Calculator</title>
+    <style>
+      input,
+      button {
+        font-size: 20px;
+        padding: 10px;
+      }
+      div {
+        margin: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Custom Calculator</h2>
+
+    <div>
+      <input id="inputA" type="number" placeholder="Enter a (for ab^x)" />
+      <input
+        id="inputB"
+        type="number"
+        placeholder="Enter b (for ab^x, logb(x), x^y)"
+      />
+      <input id="inputX" type="number" placeholder="Enter x" />
+      <input id="inputY" type="number" placeholder="Enter y (for x^y)" />
+      <button onclick="calculate()">Calculate</button>
+    </div>
+    <div>
+      <input
+        id="inputArray"
+        type="text"
+        placeholder="Enter array (comma-separated for MAD, SD)"
+      />
+    </div>
+    <div>
+      <input id="num1" type="number" placeholder="Number 1" />
+      <select id="operation">
+        <option value="add">+</option>
+        <option value="subtract">-</option>
+        <option value="multiply">*</option>
+        <option value="divide">/</option>
+      </select>
+      <input id="num2" type="number" placeholder="Number 2" />
+      <button onclick="basicCalculate()">Calculate</button>
+    </div>
+    <div id="output">
+      <p>Arccos(x): NaN</p>
+      <p>ab^x: NaN</p>
+      <p>logb(x): Not implemented</p>
+      <p>MAD: NaN</p>
+      <p>SD: NaN</p>
+      <p>x^y: 1</p>
+    </div>
+    <div id="basicOutput"><p>Result: NaN</p></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        displayInitialResults();
+      });
+
+      function calculate() {
+        let a = parseFloat(document.getElementById("inputA").value);
+        let b = parseFloat(document.getElementById("inputB").value);
+        let x = parseFloat(document.getElementById("inputX").value);
+        let y = parseFloat(document.getElementById("inputY").value);
+        let arrayInput = document.getElementById("inputArray").value;
+        let numbers = arrayInput.split(",").map((num) => parseFloat(num));
+
+        let results = {
+          "Arccos(x)": customArccos(x),
+          "ab^x": customExp(a, b, x),
+          "logb(x)": customLog(x, b),
+          MAD: meanAbsoluteDeviation(numbers),
+          SD: standardDeviation(numbers),
+          "x^y": customPow(x, y),
+        };
+
+        updateResults(results);
+      }
+
+      function basicCalculate() {
+        let num1 = parseFloat(document.getElementById("num1").value);
+        let num2 = parseFloat(document.getElementById("num2").value);
+        let operation = document.getElementById("operation").value;
+
+        let result = performOperation(num1, num2, operation);
+        document.getElementById(
+          "basicOutput"
+        ).innerHTML = `<p>Result: ${result}</p>`;
+      }
+
+      function displayInitialResults() {
+        let results = {
+          "Arccos(x)": "NaN",
+          "ab^x": "NaN",
+          "logb(x)": "Not implemented",
+          MAD: "NaN",
+          SD: "NaN",
+          "x^y": "1",
+        };
+        updateResults(results);
+      }
+
+      function updateResults(results) {
+        let outputHTML = "";
+        for (let key in results) {
+          outputHTML += `<p>${key}: ${results[key]}</p>`;
+        }
+        document.getElementById("output").innerHTML = outputHTML;
+      }
+
+      function performOperation(num1, num2, operation) {
+        switch (operation) {
+          case "add":
+            return num1 + num2;
+          case "subtract":
+            return num1 - num2;
+          case "multiply":
+            return num1 * num2;
+          case "divide":
+            return num2 !== 0 ? num1 / num2 : "Infinity"; // Handle division by zero
+          default:
+            return "NaN";
+        }
+      }
+
+      function customArccos(x) {
+        if (x < -1 || x > 1) return "Undefined"; // arccos is only defined in the range [-1, 1]
+        let pi = 3.141592653589793; // Define pi since we cannot use Math.PI
+        let term1 = x;
+        let term3 = multiply(multiply(x, x), x) / 6;
+        let term5 = multiply(multiply(multiply(multiply(x, x), x), x), x) / 40;
+        return pi / 2 - (term1 + term3 + 3 * term5);
+      }
+
+      function customExp(a, b, x) {
+        let result = a;
+        for (let i = 1; i < x; i++) {
+          let tempResult = 0;
+          for (let j = 0; j < a; j++) {
+            tempResult += b;
+          }
+          b = tempResult;
+        }
+        return b;
+      }
+
+      function customLog(x, base) {
+        // Simple iteration method (not accurate)
+        if (x <= 0 || base <= 0 || base == 1) return "Invalid input";
+        let count = 0;
+        let power = 1;
+        while (power < x) {
+          power *= base;
+          count++;
+        }
+        return count - 1;
+      }
+
+      function customPow(x, y) {
+        if (y === 0) return 1;
+        let result = x;
+        let absY = y < 0 ? -y : y; // Adjusted to handle negative y
+        for (let i = 1; i < absY; i++) {
+          let tempResult = 0;
+          for (let j = 0; j < x; j++) {
+            tempResult += result;
+          }
+          result = tempResult;
+        }
+        return y < 0 ? 1 / result : result;
+      }
+
+      function meanAbsoluteDeviation(array) {
+        let sum = 0;
+        for (let num of array) {
+          sum += num;
+        }
+        let mean = sum / array.length;
+        let totalDeviation = 0;
+        for (let num of array) {
+          totalDeviation += absolute(num - mean);
+        }
+        return totalDeviation / array.length;
+      }
+
+      function standardDeviation(array) {
+        let sum = 0;
+        for (let num of array) {
+          sum += num;
+        }
+        let mean = sum / array.length;
+        let varianceSum = 0;
+        for (let num of array) {
+          varianceSum += (num - mean) * (num - mean);
+        }
+        let variance = varianceSum / array.length;
+        return squareRoot(variance);
+      }
+
+      function absolute(value) {
+        return value < 0 ? -value : value;
+      }
+
+      function squareRoot(value) {
+        let guess = value / 2;
+        for (let i = 0; i < 20; i++) {
+          // A simple iteration to approximate square root
+          guess = (guess + value / guess) / 2;
+        }
+        return guess;
+      }
+
+      function multiply(a, b) {
+        let result = 0;
+        let sign = 1; // Keep track of the sign
+        if (b < 0) {
+          sign = -1;
+          b = -b; // Make b positive
+        }
+        for (let i = 0; i < b; i++) {
+          result += a;
+        }
+        return result * sign; // Apply the sign to the result
+      }
+    </script>
+  </body>
+</html>
